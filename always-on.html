@@ -108,11 +108,15 @@
 .ao-phase p { font-size: 13px; color: rgba(255,255,255,0.52); line-height: 1.65; }
 .ao-tiers { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
 .tier-name { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-.tier-price { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+.tier-price { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+.tier-fee-note { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.3); margin-bottom: 10px; }
 .tier-desc { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 20px; line-height: 1.55; }
 .tier-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .tier-features li { font-size: 13px; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 8px; }
 .tier-features li::before { content:'✓'; color:#4ADE80; font-weight:700; }
+.creator-cost-note { display: flex; align-items: flex-start; gap: 16px; margin-top: 28px; padding: 20px 24px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+.ccn-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.creator-cost-note strong { color: rgba(255,255,255,0.85); }
 
 </style>
 </head>
@@ -199,6 +203,7 @@
       <div class="card">
         <div class="tier-name">Core</div>
         <div class="tier-price">From £2,500/mo</div>
+        <div class="tier-fee-note">Management fee · Creator costs separate</div>
         <div class="tier-desc">A focused always-on programme for growing brands.</div>
         <ul class="tier-features">
           <li>Roster of up to 10 creators</li>
@@ -212,6 +217,7 @@
       <div class="card" style="border-color:rgba(10,94,97,0.5);background:rgba(10,94,97,0.08);">
         <div class="tier-name" style="color:#4ADE80;">Growth</div>
         <div class="tier-price">From £5,500/mo</div>
+        <div class="tier-fee-note">Management fee · Creator costs separate</div>
         <div class="tier-desc">Multi-community coverage with deeper creator relationships.</div>
         <ul class="tier-features">
           <li>Roster of up to 25 creators</li>
@@ -226,6 +232,7 @@
       <div class="card">
         <div class="tier-name">Enterprise</div>
         <div class="tier-price">Custom</div>
+        <div class="tier-fee-note">Management fee · Creator costs separate</div>
         <div class="tier-desc">Full-scale always-on across markets and communities.</div>
         <ul class="tier-features">
           <li>Unlimited roster size</li>
@@ -238,10 +245,14 @@
         <a href="contact.html" class="btn-outline" style="display:block;text-align:center;margin-top:24px;">Talk to us</a>
       </div>
     </div>
+    <div class="creator-cost-note">
+      <div class="ccn-icon">💡</div>
+      <div>
+        <strong>What about creator costs?</strong> Programme fees cover strategy, management, outreach, content oversight, and reporting. Creator fees are quoted separately based on your roster and content requirements — we provide a full cost estimate before any commitment. For reference, the diverse creators in our network typically range from £150–£2,000 per post depending on platform, audience size, and content type.
+      </div>
+    </div>
   </div>
 </section>
-
-<div class="cta-band reveal">
   <div class="cta-band-inner" style="background:var(--teal);">
     <div><h2>Ready to build your creator roster?</h2><p>We'll design a programme tailored to your brand and communities within the week.</p></div>
     <div class="cta-band-actions"><a href="contact.html" class="btn-white">Talk to our team</a><span class="cta-note">Min. 3-month commitment</span></div>
