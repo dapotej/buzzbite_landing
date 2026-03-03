@@ -53,7 +53,7 @@
   .page-hero{padding:160px 0 80px;position:relative;overflow:hidden;}
   .page-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 60% 40%,rgba(91,38,207,0.2) 0%,transparent 65%);}
   .page-hero-grid{position:absolute;inset:0;opacity:0.03;background-image:linear-gradient(rgba(255,255,255,0.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.6) 1px,transparent 1px);background-size:64px 64px;}
-  .page-hero-inner{max-width:var(--max-w);margin:0 auto;padding:0 var(--px);position:relative;z-index:1;}
+  .page-hero-inner{max-width:800px;margin:0;padding:0 var(--px);position:relative;z-index:1;}
   .page-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(91,38,207,0.14);border:1px solid rgba(91,38,207,0.38);border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:var(--purple-light);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:24px;}
   .page-hero h1{font-size:clamp(42px,5vw,68px);font-weight:800;line-height:1.07;letter-spacing:-2px;margin-bottom:20px;}
   .page-hero p{font-size:18px;color:rgba(255,255,255,0.6);line-height:1.75;max-width:540px;margin-bottom:36px;}
@@ -89,6 +89,20 @@
     .form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:14px;transition:border-color 0.2s;outline:none;}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--purple);}
     .form-group select option{background:#1a1a2e;}
+    .form-group.error input,.form-group.error select,.form-group.error textarea{border-color:#FF134E;}
+    .form-error{font-size:12px;color:#FF134E;margin-top:4px;display:none;}
+    .form-group.error .form-error{display:block;}
+    .submit-btn{background:var(--purple);color:var(--white);padding:15px;border-radius:8px;font-size:15px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;transition:background 0.2s,transform 0.2s,box-shadow 0.2s;}
+    .submit-btn:hover:not(:disabled){background:#6f35e8;transform:translateY(-2px);box-shadow:0 8px 28px rgba(91,38,207,0.48);}
+    .submit-btn:disabled{opacity:0.7;cursor:not-allowed;transform:none;}
+    .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:none;flex-shrink:0;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .submit-btn.loading .spinner{display:block;}
+    .submit-btn.loading .btn-label{display:none;}
+    .success-state{display:none;text-align:center;padding:56px 32px;border:1px solid rgba(74,222,128,0.25);border-radius:16px;background:rgba(10,94,97,0.12);}
+    .success-icon{font-size:48px;margin-bottom:16px;}
+    .success-state h3{font-size:22px;font-weight:700;margin-bottom:10px;}
+    .success-state p{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;}
     .contact-info-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;margin-bottom:20px;}
     .contact-info-card h3,.contact-pathways h3{font-size:15px;font-weight:700;margin-bottom:20px;}
     .contact-method{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
@@ -134,7 +148,7 @@
   <div class="page-hero-inner">
     <div class="page-badge">Get Early Access</div>
     <h1>Let's talk.</h1>
-    <p>Whether you're a DTC brand ready to prove creator ROI, an agency looking for a measurement-first platform, or a creator wanting to join the network — get in touch and we'll come back to you within one business day.</p>
+    <p>Whether you're a DTC brand ready to prove creator ROI, an agency looking for a measurement-first platform, or a creator wanting to join the network &mdash; get in touch and we'll come back to you within one business day.</p>
   </div>
 </section>
 
@@ -143,52 +157,63 @@
     <div class="contact-layout">
       <div>
         <h2 style="font-size:24px;font-weight:700;margin-bottom:8px;">Tell us about your brand.</h2>
-        <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px;line-height:1.7;">We'll come back within one business day with a tailored response — whether that's a campaign proposal, a platform demo, or a conversation about the programme that's right for you.</p>
-        <div class="contact-form">
-          <div class="form-row">
-            <div class="form-group"><label>First name</label><input type="text" placeholder="Sophie"></div>
-            <div class="form-group"><label>Last name</label><input type="text" placeholder="Kim"></div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px;line-height:1.7;">We'll come back within one business day with a tailored response &mdash; whether that's a campaign proposal, a platform demo, or a conversation about the programme that's right for you.</p>
+        <div id="form-wrap">
+          <div class="contact-form" id="contact-form">
+            <div class="form-row">
+              <div class="form-group" id="fg-first"><label>First name</label><input id="f-first" type="text" placeholder="Sophie"><span class="form-error">Please enter your first name</span></div>
+              <div class="form-group" id="fg-last"><label>Last name</label><input id="f-last" type="text" placeholder="Kim"><span class="form-error">Please enter your last name</span></div>
+            </div>
+            <div class="form-group" id="fg-email"><label>Work email</label><input id="f-email" type="email" placeholder="sophie@brand.com"><span class="form-error">Please enter a valid email address</span></div>
+            <div class="form-group" id="fg-brand"><label>Brand / company</label><input id="f-brand" type="text" placeholder="Your DTC brand"><span class="form-error">Please enter your brand name</span></div>
+            <div class="form-group" id="fg-type"><label>What best describes you?</label>
+              <select id="f-type">
+                <option value="">Select one...</option>
+                <option>DTC brand &mdash; looking to run campaigns</option>
+                <option>DTC brand &mdash; interested in always-on programme</option>
+                <option>Agency &mdash; looking for platform access</option>
+                <option>Creator &mdash; want to join the network</option>
+                <option>Investor / press / other</option>
+              </select>
+              <span class="form-error">Please select an option</span>
+            </div>
+            <div class="form-group"><label>Approximate annual influencer budget</label>
+              <select id="f-budget">
+                <option value="">Select range...</option>
+                <option>Under &pound;25K</option>
+                <option>&pound;25K &ndash; &pound;100K</option>
+                <option>&pound;100K &ndash; &pound;500K</option>
+                <option>&pound;500K+</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Tell us more (optional)</label><textarea id="f-message" rows="4" placeholder="Campaign goals, target communities, markets you're operating in, or anything else that's useful context..."></textarea></div>
+            <button type="button" class="submit-btn" id="submit-btn" onclick="submitForm()">
+              <span class="btn-label">Send message &rarr;</span>
+              <span class="spinner"></span>
+            </button>
           </div>
-          <div class="form-group"><label>Work email</label><input type="email" placeholder="sophie@brand.com"></div>
-          <div class="form-group"><label>Brand / company</label><input type="text" placeholder="Your DTC brand"></div>
-          <div class="form-group"><label>What best describes you?</label>
-            <select>
-              <option value="">Select one...</option>
-              <option>DTC brand — looking to run campaigns</option>
-              <option>DTC brand — interested in always-on programme</option>
-              <option>Agency — looking for platform access</option>
-              <option>Creator — want to join the network</option>
-              <option>Investor / press / other</option>
-            </select>
+          <div class="success-state" id="success-state">
+            <div class="success-icon">&#10003;</div>
+            <h3>Message sent!</h3>
+            <p>Thanks for reaching out. We'll come back to you within one business day with a tailored response.</p>
           </div>
-          <div class="form-group"><label>Approximate annual influencer budget</label>
-            <select>
-              <option value="">Select range...</option>
-              <option>Under £25K</option>
-              <option>£25K – £100K</option>
-              <option>£100K – £500K</option>
-              <option>£500K+</option>
-              <option>Not sure yet</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Tell us more (optional)</label><textarea rows="4" placeholder="Campaign goals, target communities, markets you're operating in, or anything else that's useful context..."></textarea></div>
-          <button type="submit" class="btn-primary" style="border:none;cursor:pointer;justify-content:center;">Send message →</button>
         </div>
       </div>
       <div>
         <div class="contact-info-card">
           <h3>Other ways to reach us</h3>
-          <div class="contact-method"><div class="cm-icon">✉️</div><div><div class="cm-label">Email</div><div class="cm-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f199949d9d9eb193848b8b93988594df989e">[email&#160;protected]</a></div></div></div>
-          <div class="contact-method"><div class="cm-icon">💼</div><div><div class="cm-label">LinkedIn</div><div class="cm-val">Buzzbite</div></div></div>
-          <div class="contact-method"><div class="cm-icon">🐦</div><div><div class="cm-label">Twitter / X</div><div class="cm-val">@buzzbite</div></div></div>
+          <div class="contact-method"><div class="cm-icon">&#9993;</div><div><div class="cm-label">Email</div><div class="cm-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="85ede0e9e9eac5e7f0ffffe7ecf1e0abecea">[email&#160;protected]</a></div></div></div>
+          <div class="contact-method"><div class="cm-icon">&#128188;</div><div><div class="cm-label">LinkedIn</div><div class="cm-val">Buzzbite</div></div></div>
+          <div class="contact-method"><div class="cm-icon">&#128038;</div><div><div class="cm-label">Twitter / X</div><div class="cm-val">@buzzbite</div></div></div>
         </div>
         <div class="contact-pathways">
           <h3>Looking for something specific?</h3>
-          <a href="/managed-campaigns.html" class="pathway-link">🚀 Run a managed campaign →</a>
-          <a href="/always-on.html" class="pathway-link">🔄 Build an always-on programme →</a>
-          <a href="/dei-strategy.html" class="pathway-link">🎯 Start with a DEI strategy audit →</a>
-          <a href="/enterprise.html" class="pathway-link">🏢 Talk to our enterprise team →</a>
-          <a href="/careers.html" class="pathway-link">💼 Join the Buzzbite team →</a>
+          <a href="/managed-campaigns.html" class="pathway-link">&#128640; Run a managed campaign &rarr;</a>
+          <a href="/always-on.html" class="pathway-link">&#128260; Build an always-on programme &rarr;</a>
+          <a href="/dei-strategy.html" class="pathway-link">&#127919; Start with a DEI strategy audit &rarr;</a>
+          <a href="/enterprise.html" class="pathway-link">&#127970; Talk to our enterprise team &rarr;</a>
+          <a href="/careers.html" class="pathway-link">&#128188; Join the Buzzbite team &rarr;</a>
         </div>
       </div>
     </div>
@@ -232,4 +257,60 @@
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
   document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const h=a.getAttribute('href');if(!h||h==='#')return;const t=document.querySelector(h);if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}});
   const li=document.querySelector('.nav-links > li:has(.nav-dropdown)');
-  if(li){let timer;const open=()=>{clearTimeout(timer);li.classList.add('open');};const close=()=>{timer=setTimeout(()=>li.classList.remove('open'),150);};li.addEventListener('mouseenter',open);li.addEventListener('mouseleave',close);li.querySelector('.nav-dropdown').a
+  if(li){let timer;const open=()=>{clearTimeout(timer);li.classList.add('open');};const close=()=>{timer=setTimeout(()=>li.classList.remove('open'),150);};li.addEventListener('mouseenter',open);li.addEventListener('mouseleave',close);li.querySelector('.nav-dropdown').addEventListener('mouseenter',open);li.querySelector('.nav-dropdown').addEventListener('mouseleave',close);document.addEventListener('click',e=>{if(!li.contains(e.target))li.classList.remove('open');});}
+</script>
+
+<script>
+// Update this URL after deploying your Cloudflare Worker
+var WORKER_URL = 'https://buzzbite-contact.dapo-292.workers.dev';
+
+function submitForm() {
+  var valid = true;
+
+  function validate(fgId, inputId, check) {
+    var fg = document.getElementById(fgId);
+    var val = document.getElementById(inputId).value.trim();
+    if (!check(val)) { fg.classList.add('error'); valid = false; }
+    else { fg.classList.remove('error'); }
+  }
+
+  validate('fg-first', 'f-first', function(v){ return v.length > 0; });
+  validate('fg-last',  'f-last',  function(v){ return v.length > 0; });
+  validate('fg-email', 'f-email', function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); });
+  validate('fg-brand', 'f-brand', function(v){ return v.length > 0; });
+  validate('fg-type',  'f-type',  function(v){ return v !== ''; });
+
+  ['f-first','f-last','f-email','f-brand','f-type'].forEach(function(id) {
+    document.getElementById(id).addEventListener('input', function() {
+      this.closest('.form-group').classList.remove('error');
+    }, { once: true });
+  });
+
+  if (!valid) return;
+
+  var btn = document.getElementById('submit-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  var payload = {
+    firstName: document.getElementById('f-first').value.trim(),
+    lastName:  document.getElementById('f-last').value.trim(),
+    email:     document.getElementById('f-email').value.trim(),
+    brand:     document.getElementById('f-brand').value.trim(),
+    type:      document.getElementById('f-type').value,
+    budget:    document.getElementById('f-budget').value,
+    message:   document.getElementById('f-message').value.trim()
+  };
+
+  fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (data.success) {
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+    } else {
+      throw new Error(data.error || 'Unkn
