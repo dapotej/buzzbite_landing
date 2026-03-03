@@ -53,7 +53,7 @@
   .page-hero{padding:160px 0 80px;position:relative;overflow:hidden;}
   .page-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 60% 40%,rgba(91,38,207,0.2) 0%,transparent 65%);}
   .page-hero-grid{position:absolute;inset:0;opacity:0.03;background-image:linear-gradient(rgba(255,255,255,0.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.6) 1px,transparent 1px);background-size:64px 64px;}
-  .page-hero-inner{max-width:800px;margin:0;padding:0 var(--px);position:relative;z-index:1;}
+  .page-hero-inner{max-width:var(--max-w);margin:0 auto;padding:0 var(--px);position:relative;z-index:1;}
   .page-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(91,38,207,0.14);border:1px solid rgba(91,38,207,0.38);border-radius:100px;padding:7px 16px;font-size:11px;font-weight:700;color:var(--purple-light);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:24px;}
   .page-hero h1{font-size:clamp(42px,5vw,68px);font-weight:800;line-height:1.07;letter-spacing:-2px;margin-bottom:20px;}
   .page-hero p{font-size:18px;color:rgba(255,255,255,0.6);line-height:1.75;max-width:540px;margin-bottom:36px;}
@@ -178,7 +178,7 @@
       <div>
         <div class="contact-info-card">
           <h3>Other ways to reach us</h3>
-          <div class="contact-method"><div class="cm-icon">✉️</div><div><div class="cm-label">Email</div><div class="cm-val">hello@buzzbite.io</div></div></div>
+          <div class="contact-method"><div class="cm-icon">✉️</div><div><div class="cm-label">Email</div><div class="cm-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f199949d9d9eb193848b8b93988594df989e">[email&#160;protected]</a></div></div></div>
           <div class="contact-method"><div class="cm-icon">💼</div><div><div class="cm-label">LinkedIn</div><div class="cm-val">Buzzbite</div></div></div>
           <div class="contact-method"><div class="cm-icon">🐦</div><div><div class="cm-label">Twitter / X</div><div class="cm-val">@buzzbite</div></div></div>
         </div>
@@ -227,12 +227,9 @@
     </div>
   </div>
 </footer>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible');}),{threshold:0.08});
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
   document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const h=a.getAttribute('href');if(!h||h==='#')return;const t=document.querySelector(h);if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}});
   const li=document.querySelector('.nav-links > li:has(.nav-dropdown)');
-  if(li){let timer;const open=()=>{clearTimeout(timer);li.classList.add('open');};const close=()=>{timer=setTimeout(()=>li.classList.remove('open'),150);};li.addEventListener('mouseenter',open);li.addEventListener('mouseleave',close);li.querySelector('.nav-dropdown').addEventListener('mouseenter',open);li.querySelector('.nav-dropdown').addEventListener('mouseleave',close);document.addEventListener('click',e=>{if(!li.contains(e.target))li.classList.remove('open');});}
-</script>
-</body>
-</html>
+  if(li){let timer;const open=()=>{clearTimeout(timer);li.classList.add('open');};const close=()=>{timer=setTimeout(()=>li.classList.remove('open'),150);};li.addEventListener('mouseenter',open);li.addEventListener('mouseleave',close);li.querySelector('.nav-dropdown').a
