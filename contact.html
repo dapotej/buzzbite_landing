@@ -116,6 +116,7 @@
     .pathway-link:hover{color:var(--white);}
 
   </style>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <script>
@@ -194,6 +195,7 @@
               </select>
             </div>
             <div class="form-group"><label>Tell us more (optional)</label><textarea id="f-message" rows="4" placeholder="Campaign goals, target communities, markets you're operating in, or anything else that's useful context..."></textarea></div>
+            <div class="cf-turnstile" id="turnstile-widget" data-sitekey="TURNSTILE_SITE_KEY" data-theme="dark" data-size="normal"></div>
             <button type="button" class="submit-btn" id="submit-btn" onclick="submitForm()">
               <span class="btn-label">Send message &rarr;</span>
               <span class="spinner"></span>
@@ -289,6 +291,11 @@ function submitForm() {
   var btn = document.getElementById("submit-btn");
   btn.classList.add("loading");
   btn.disabled = true;
+  var turnstileToken = document.querySelector('[name="cf-turnstile-response"]');
+  if (!turnstileToken || !turnstileToken.value) {
+    alert("Please wait for the security check to complete.");
+    return;
+  }
   var payload = {
     firstName: document.getElementById("f-first").value.trim(),
     lastName:  document.getElementById("f-last").value.trim(),
@@ -296,7 +303,8 @@ function submitForm() {
     brand:     document.getElementById("f-brand").value.trim(),
     type:      document.getElementById("f-type").value,
     budget:    document.getElementById("f-budget").value,
-    message:   document.getElementById("f-message").value.trim()
+    message:   document.getElementById("f-message").value.trim(),
+    turnstileToken: turnstileToken.value
   };
   fetch(WORKER_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
   .then(function(res){return res.json();})
