@@ -77,6 +77,41 @@
   .cta-note{font-size:12px;color:rgba(255,255,255,0.5);}
   .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
   .reveal.visible{opacity:1;transform:translateY(0);}
+  /* ── MOBILE RESPONSIVE ───────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    :root { --px: 20px; }
+    .nav-links { display: none; }
+    .nav-cta { padding: 10px 16px; font-size: 13px; }
+    .page-hero { padding: 100px 0 52px; }
+    .page-hero-inner h1 { font-size: 32px; letter-spacing: -1px; }
+    .page-hero-inner p { font-size: 14px; }
+    .page-hero-actions { flex-direction: column; gap: 10px; }
+    .page-hero-actions a { width: 100%; text-align: center; justify-content: center; }
+    .section { padding: 56px 0; }
+    .section-title { font-size: clamp(24px, 6vw, 36px); }
+    .section-subtitle { font-size: 14px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-col:first-child { grid-column: 1 / -1; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .cta-band-inner { grid-template-columns: 1fr; padding: 40px 24px; }
+    .cta-band-actions { align-items: flex-start; }
+    .includes-grid,.dei-offerings,.ent-grid,.team-grid,.blog-grid,.perks-grid,.pricing-cols,.ao-tiers { grid-template-columns: 1fr; }
+    .two-col-intro,.about-story,.managed-inner,.contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    .process-step { grid-template-columns: 48px 1fr; gap: 16px; }
+    .ao-phases { grid-template-columns: 1fr; }
+    .ao-phase-arrow { transform: rotate(90deg); text-align: center; }
+    .cmp-head,.cmp-row { grid-template-columns: 1fr 36px 36px; gap: 8px; padding: 12px 16px; }
+    .cmp-row span:first-child { font-size: 12px; }
+    .price-row,.testi-row,.ent-quotes { grid-template-columns: 1fr; }
+    .blog-featured { grid-template-columns: 1fr; gap: 28px; }
+    .blog-featured-img { height: 180px; }
+    .role-item { grid-template-columns: 1fr; gap: 12px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .section-title { font-size: 22px; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
 
   </style>
   <style>
@@ -127,7 +162,7 @@
       </li>
       <li><a href="/index.html#pricing">Pricing</a></li>
       <li><a href="/about.html">About</a></li>
-      <li><a href="/contact.html" class="nav-cta">Get Early Access</a></li>
+      <li><a href="https://app.buzzbite.io/" class="nav-cta">Get Started</a></li>
     </ul>
   </div>
 </nav>
