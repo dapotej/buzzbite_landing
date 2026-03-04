@@ -52,7 +52,7 @@ nav.nav-open .nav-hamburger span:nth-child(3){transform:translateY(-7px) rotate(
 @media(max-width:768px){
   :root{--px:20px;}
 
-  .nav-hamburger{display:flex;}
+  .nav-hamburger{display:flex !important;}
   .nav-links{
     display:none;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;
     background:rgba(10,10,10,0.97);backdrop-filter:blur(20px);
