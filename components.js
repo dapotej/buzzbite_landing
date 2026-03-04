@@ -37,17 +37,33 @@
 
   // ── Services dropdown ─────────────────────────────────────────────────────
   const li = document.querySelector('.nav-links > li:has(.nav-dropdown)');
-  if (!li) return;
-  let closeTimer;
+  if (li) {
+    let closeTimer;
+    const openMenu  = () => { clearTimeout(closeTimer); li.classList.add('open'); };
+    const closeMenu = () => { closeTimer = setTimeout(() => li.classList.remove('open'), 150); };
+    li.addEventListener('mouseenter', openMenu);
+    li.addEventListener('mouseleave', closeMenu);
+    li.querySelector('.nav-dropdown').addEventListener('mouseenter', openMenu);
+    li.querySelector('.nav-dropdown').addEventListener('mouseleave', closeMenu);
+    document.addEventListener('click', e => { if (!li.contains(e.target)) li.classList.remove('open'); });
+  }
 
-  const openMenu  = () => { clearTimeout(closeTimer); li.classList.add('open'); };
-  const closeMenu = () => { closeTimer = setTimeout(() => li.classList.remove('open'), 150); };
-
-  li.addEventListener('mouseenter', openMenu);
-  li.addEventListener('mouseleave', closeMenu);
-  li.querySelector('.nav-dropdown').addEventListener('mouseenter', openMenu);
-  li.querySelector('.nav-dropdown').addEventListener('mouseleave', closeMenu);
-  document.addEventListener('click', e => { if (!li.contains(e.target)) li.classList.remove('open'); });
+  // ── Mobile hamburger menu ────────────────────────────────────────────────
+  const hamburger = document.querySelector('.nav-hamburger');
+  const navEl = document.querySelector('nav');
+  if (hamburger && navEl) {
+    hamburger.addEventListener('click', e => {
+      e.stopPropagation();
+      navEl.classList.toggle('nav-open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      if (a.classList.contains('nav-dropdown-trigger')) return;
+      a.addEventListener('click', () => navEl.classList.remove('nav-open'));
+    });
+    document.addEventListener('click', e => {
+      if (!navEl.contains(e.target)) navEl.classList.remove('nav-open');
+    });
+  }
 })();
 
 // ── Scroll reveal ─────────────────────────────────────────────────────────────
