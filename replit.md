@@ -20,10 +20,12 @@ Static marketing website for Buzzbite — a creator operating system for DTC bra
 - `responsive.css` — Mobile/tablet responsive media queries for all pages
 
 ## Architecture
-- Each page has inline `<style>` blocks with page-specific + duplicated common CSS
-- `nav.html` and `footer.html` are fetched and injected by `components.js` at runtime
+- Each page has inline `<style>` blocks with page-specific CSS
+- Pages use `<div id="nav-placeholder">` and `<div id="footer-placeholder">` elements
+- `nav.html` and `footer.html` are fetched and injected by `components.js` at runtime (loaded via `<script defer>`)
 - `responsive.css` is linked from every page and handles all responsive breakpoints (1024px, 768px, 480px)
 - Mobile navigation uses a hamburger menu toggled via `components.js`
+- Note: `contact.html` was truncated in the original repo; closing tags were added to make it functional
 
 ## Serving
 - Served via Python's built-in HTTP server on port 5000
