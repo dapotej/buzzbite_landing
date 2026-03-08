@@ -118,21 +118,27 @@
 
   </style>
   <style>
-
     .blog-featured{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:72px;padding-bottom:72px;border-bottom:1px solid rgba(255,255,255,0.07);}
-    .blog-featured-img{background:rgba(91,38,207,0.12);border:1px solid rgba(91,38,207,0.2);border-radius:16px;height:320px;display:flex;align-items:center;justify-content:center;font-size:80px;}
+    .blog-featured-img{border-radius:16px;height:320px;overflow:hidden;}
+    .blog-featured-img img{width:100%;height:100%;object-fit:cover;}
+    .blog-featured-img-placeholder{background:rgba(91,38,207,0.12);border:1px solid rgba(91,38,207,0.2);border-radius:16px;height:320px;display:flex;align-items:center;justify-content:center;font-size:80px;}
     .blog-cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--purple-light);margin-bottom:12px;}
     .blog-featured-content h2{font-size:28px;font-weight:800;letter-spacing:-0.5px;line-height:1.3;margin-bottom:14px;}
     .blog-featured-content p{font-size:15px;color:rgba(255,255,255,0.55);line-height:1.75;}
     .blog-meta{display:flex;gap:16px;font-size:12px;color:rgba(255,255,255,0.35);margin-top:14px;}
+    .blog-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;}
+    .blog-filter-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);padding:8px 20px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Montserrat',sans-serif;}
+    .blog-filter-btn:hover{border-color:rgba(91,38,207,0.4);color:var(--white);}
+    .blog-filter-btn.active{background:var(--purple);border-color:var(--purple);color:var(--white);}
     .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-    .blog-card{padding:28px;border:1px solid rgba(255,255,255,0.07);border-radius:14px;transition:border-color 0.2s,transform 0.2s;}
+    .blog-card{border:1px solid rgba(255,255,255,0.07);border-radius:14px;transition:border-color 0.2s,transform 0.2s;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;}
     .blog-card:hover{border-color:rgba(91,38,207,0.35);transform:translateY(-3px);}
-    .blog-card-icon{font-size:28px;margin-bottom:12px;display:block;}
-    .blog-card h3{font-size:15px;font-weight:700;line-height:1.45;margin:8px 0 12px;}
+    .blog-card-thumb{width:100%;height:180px;object-fit:cover;display:block;}
+    .blog-card-body{padding:24px 28px 28px;}
+    .blog-card h3{font-size:15px;font-weight:700;line-height:1.45;margin:8px 0 12px;color:var(--white);}
     .blog-link{font-size:13px;font-weight:700;color:var(--purple-light);text-decoration:none;}
     .blog-link:hover{color:var(--white);}
-
+    .blog-loading{text-align:center;padding:60px 0;color:rgba(255,255,255,0.4);font-size:15px;}
   </style>
   <link rel="stylesheet" href="/responsive.css?v=3">
 </head>
@@ -150,32 +156,101 @@
 
 <section class="section">
   <div class="section-inner">
-    <div class="blog-featured reveal">
-      <div class="blog-featured-img">📊</div>
-      <div class="blog-featured-content">
-        <div class="blog-cat">Research</div>
-        <h2>Why nano and micro-creators outperform on the metrics that actually matter</h2>
-        <p>We analysed 1,200 creator campaigns and found that follower count predicted ROAS only 21% of the time. Community trust score predicted it 74% of the time. Here's what that means for how you build your creator mix — and why the brands still spending on macro-creators are leaving money on the table.</p>
-        <div class="blog-meta"><span>Feb 2026</span><span>10 min read</span></div>
-        <a href="#" class="blog-link" style="display:inline-block;margin-top:16px;">Read article →</a>
-      </div>
-    </div>
-    <div class="blog-grid reveal">
-      <div class="blog-card"><span class="blog-card-icon">💡</span><div class="blog-cat">Strategy</div><h3>The gifting-to-paid pipeline: how beauty brands turn seeding into a revenue attribution engine</h3><div class="blog-meta"><span>Jan 2026</span><span>7 min read</span></div><a href="#" class="blog-link">Read →</a></div>
-      <div class="blog-card"><span class="blog-card-icon">📈</span><div class="blog-cat">Data</div><h3>DTC creator marketing benchmarks 2025: CAC, ROAS, and LTV by creator tier and vertical</h3><div class="blog-meta"><span>Jan 2026</span><span>8 min read</span></div><a href="#" class="blog-link">Read →</a></div>
-      <div class="blog-card"><span class="blog-card-icon">🎯</span><div class="blog-cat">Guide</div><h3>How to brief a nano-creator: a practical template that gets authentic content</h3><div class="blog-meta"><span>Dec 2025</span><span>5 min read</span></div><a href="#" class="blog-link">Read →</a></div>
-      <div class="blog-card"><span class="blog-card-icon">🧠</span><div class="blog-cat">Research</div><h3>What makes a creator genuinely trusted by their community — and how to identify it before you pay</h3><div class="blog-meta"><span>Dec 2025</span><span>7 min read</span></div><a href="#" class="blog-link">Read →</a></div>
-      <div class="blog-card"><span class="blog-card-icon">🌍</span><div class="blog-cat">Playbook</div><h3>Launching a DTC brand in a new market: how to find the right creators when you don't know the landscape</h3><div class="blog-meta"><span>Nov 2025</span><span>6 min read</span></div><a href="#" class="blog-link">Read →</a></div>
-      <div class="blog-card"><span class="blog-card-icon">⚙️</span><div class="blog-cat">Product</div><h3>Introducing the Buzz Score: how we measure creator performance beyond reach</h3><div class="blog-meta"><span>Nov 2025</span><span>6 min read</span></div><a href="#" class="blog-link">Read →</a></div>
-    </div>
+    <div id="blog-featured" class="reveal"></div>
+    <div id="blog-filters" class="blog-filters"></div>
+    <div id="blog-grid" class="blog-grid reveal"></div>
+    <div id="blog-loading" class="blog-loading">Loading articles...</div>
   </div>
 </section>
 
 <div id="footer-placeholder"></div>
 <script>
-  const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible');}),{threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-  document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const h=a.getAttribute('href');if(!h||h==='#')return;const t=document.querySelector(h);if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}});
+(async function() {
+  var loadingEl = document.getElementById('blog-loading');
+  var res;
+  var posts;
+  try {
+    res = await fetch('/blog/posts.json');
+    posts = await res.json();
+  } catch (err) {
+    loadingEl.textContent = 'Unable to load articles. Please try refreshing the page.';
+    return;
+  }
+
+  loadingEl.style.display = 'none';
+
+  const featuredPosts = posts.filter(function(p) { return p.featured; });
+  featuredPosts.sort(function(a, b) {
+    return new Date(b.postedOn || b.publishedOn || b.createdOn || 0) - new Date(a.postedOn || a.publishedOn || a.createdOn || 0);
+  });
+  const featuredPost = featuredPosts[0] || posts[0];
+  const featuredEl = document.getElementById('blog-featured');
+
+  function formatDate(post) {
+    const d = new Date(post.postedOn || post.publishedOn || post.createdOn);
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+  }
+
+  if (featuredPost) {
+    const imgHTML = featuredPost.thumbnailImage
+      ? '<div class="blog-featured-img"><img src="' + featuredPost.thumbnailImage + '" alt="' + featuredPost.title.replace(/"/g, '&quot;') + '"></div>'
+      : '<div class="blog-featured-img-placeholder">&#128202;</div>';
+
+    const subHTML = featuredPost.subheading
+      ? '<p>' + featuredPost.subheading + '</p>'
+      : '';
+
+    featuredEl.innerHTML =
+      imgHTML +
+      '<div class="blog-featured-content">' +
+        '<div class="blog-cat">' + (featuredPost.category || 'Blog') + '</div>' +
+        '<h2>' + featuredPost.title + '</h2>' +
+        subHTML +
+        '<div class="blog-meta"><span>' + formatDate(featuredPost) + '</span><span>' + (featuredPost.readingTime || '') + ' read</span></div>' +
+        '<a href="/blog-post.html#' + featuredPost.slug + '" class="blog-link" style="display:inline-block;margin-top:16px;">Read article &rarr;</a>' +
+      '</div>';
+    featuredEl.classList.add('blog-featured');
+  }
+
+  const categories = [...new Set(posts.map(p => p.category).filter(Boolean))].sort();
+  const filtersEl = document.getElementById('blog-filters');
+  filtersEl.innerHTML = '<button class="blog-filter-btn active" data-cat="all">All</button>' +
+    categories.map(c => '<button class="blog-filter-btn" data-cat="' + c + '">' + c + '</button>').join('');
+
+  const gridEl = document.getElementById('blog-grid');
+  const otherPosts = posts.filter(p => p !== featuredPost);
+
+  function renderGrid(filterCat) {
+    const filtered = filterCat === 'all' ? otherPosts : otherPosts.filter(p => p.category === filterCat);
+    gridEl.innerHTML = filtered.map(function(p) {
+      const thumbHTML = p.thumbnailImage
+        ? '<img class="blog-card-thumb" src="' + p.thumbnailImage + '" alt="' + p.title.replace(/"/g, '&quot;') + '">'
+        : '';
+      return '<a href="/blog-post.html#' + p.slug + '" class="blog-card">' +
+        thumbHTML +
+        '<div class="blog-card-body">' +
+          '<div class="blog-cat">' + (p.category || 'Blog') + '</div>' +
+          '<h3>' + p.title + '</h3>' +
+          '<div class="blog-meta"><span>' + formatDate(p) + '</span><span>' + (p.readingTime || '') + ' read</span></div>' +
+        '</div>' +
+      '</a>';
+    }).join('');
+  }
+
+  renderGrid('all');
+
+  filtersEl.addEventListener('click', function(e) {
+    const btn = e.target.closest('.blog-filter-btn');
+    if (!btn) return;
+    filtersEl.querySelectorAll('.blog-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGrid(btn.dataset.cat);
+  });
+
+  const obs = new IntersectionObserver(e => e.forEach(i => { if (i.isIntersecting) i.target.classList.add('visible'); }), { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+})();
 </script>
 <script src="/components.js" defer></script>
 </body>

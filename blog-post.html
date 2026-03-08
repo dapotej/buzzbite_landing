@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Buzzbite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+  .post-hero{padding:140px 0 0;position:relative;overflow:hidden;}
+  .post-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 60% 40%,rgba(91,38,207,0.2) 0%,transparent 65%);}
+  .post-hero-grid{position:absolute;inset:0;opacity:0.03;background-image:linear-gradient(rgba(255,255,255,0.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.6) 1px,transparent 1px);background-size:64px 64px;}
+  .post-hero-inner{max-width:var(--max-w);margin:0 auto;padding:0 var(--px);position:relative;z-index:1;}
+  .post-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--purple-light);text-decoration:none;margin-bottom:32px;transition:color 0.2s;}
+  .post-back:hover{color:var(--white);}
+  .post-back svg{width:16px;height:16px;}
+  .post-cat{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--purple-light);background:rgba(91,38,207,0.14);border:1px solid rgba(91,38,207,0.3);border-radius:100px;padding:6px 16px;margin-bottom:20px;}
+  .post-title{font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.12;letter-spacing:-1.5px;margin-bottom:16px;max-width:800px;}
+  .post-subheading{font-size:18px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:700px;margin-bottom:24px;}
+  .post-meta{display:flex;align-items:center;gap:20px;font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:48px;flex-wrap:wrap;}
+  .post-meta span{display:flex;align-items:center;gap:6px;}
+  .post-meta-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.2);}
+  .post-hero-image{max-width:var(--max-w);margin:0 auto;padding:0 var(--px);}
+  .post-hero-image img{width:100%;height:auto;max-height:480px;object-fit:cover;border-radius:16px;border:1px solid rgba(255,255,255,0.07);}
+  .post-body{max-width:760px;margin:0 auto;padding:64px var(--px) 100px;}
+  .post-body h2{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin:48px 0 16px;line-height:1.3;}
+  .post-body h3{font-size:22px;font-weight:700;margin:40px 0 14px;line-height:1.35;}
+  .post-body h4{font-size:18px;font-weight:700;margin:32px 0 12px;line-height:1.4;}
+  .post-body h5{font-size:24px;font-weight:800;letter-spacing:-0.3px;margin:44px 0 16px;line-height:1.3;}
+  .post-body h6{font-size:18px;font-weight:700;margin:32px 0 12px;line-height:1.4;color:var(--purple-light);}
+  .post-body p{font-size:16px;line-height:1.85;color:rgba(255,255,255,0.72);margin-bottom:20px;}
+  .post-body a{color:var(--purple-light);text-decoration:underline;text-underline-offset:3px;transition:color 0.2s;}
+  .post-body a:hover{color:var(--white);}
+  .post-body ul,.post-body ol{margin:16px 0 24px 24px;color:rgba(255,255,255,0.72);}
+  .post-body li{font-size:16px;line-height:1.85;margin-bottom:8px;}
+  .post-body img{max-width:100%;height:auto;border-radius:12px;margin:24px 0;border:1px solid rgba(255,255,255,0.07);}
+  .post-body blockquote{border-left:3px solid var(--purple);padding:16px 24px;margin:28px 0;background:rgba(91,38,207,0.06);border-radius:0 12px 12px 0;}
+  .post-body blockquote p{color:rgba(255,255,255,0.6);font-style:italic;margin-bottom:0;}
+  .post-body figure{margin:28px 0;text-align:center;}
+  .post-body figure img{margin:0 auto;}
+  .post-body figcaption{font-size:13px;color:rgba(255,255,255,0.35);margin-top:10px;}
+  .post-body strong{color:var(--white);font-weight:700;}
+  .post-body em{font-style:italic;}
+  .post-body hr{border:none;height:1px;background:rgba(255,255,255,0.07);margin:48px 0;}
+  .post-body table{width:100%;border-collapse:collapse;margin:24px 0;}
+  .post-body th,.post-body td{padding:12px 16px;border:1px solid rgba(255,255,255,0.1);font-size:14px;text-align:left;}
+  .post-body th{background:rgba(91,38,207,0.12);color:var(--white);font-weight:700;}
+  .post-body td{color:rgba(255,255,255,0.65);}
+  .post-loading{text-align:center;padding:200px 48px;font-size:16px;color:rgba(255,255,255,0.4);}
+  .post-not-found{text-align:center;padding:200px 48px;}
+  .post-not-found h2{font-size:32px;font-weight:800;margin-bottom:16px;}
+  .post-not-found p{color:rgba(255,255,255,0.5);margin-bottom:24px;}
+  .post-not-found a{color:var(--purple-light);text-decoration:none;font-weight:600;}
+  @media (max-width: 768px) {
+    .post-hero { padding: 100px 0 0; }
+    .post-title { font-size: 26px; letter-spacing: -0.5px; }
+    .post-subheading { font-size: 15px; }
+    .post-meta { gap: 12px; }
+    .post-hero-image img { max-height: 280px; border-radius: 12px; }
+    .post-body { padding: 40px var(--px) 60px; }
+    .post-body h2 { font-size: 22px; }
+    .post-body h3 { font-size: 18px; }
+    .post-body h5 { font-size: 20px; }
+    .post-body p, .post-body li { font-size: 15px; }
+  }
+  @media (max-width: 480px) {
+    .post-body h2 { font-size: 20px; }
+  }
+  </style>
+  <link rel="stylesheet" href="/responsive.css?v=3">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<div id="post-loading" class="post-loading">Loading article...</div>
+<div id="post-content" style="display:none;">
+  <section class="post-hero">
+    <div class="post-hero-bg"></div><div class="post-hero-grid"></div>
+    <div class="post-hero-inner">
+      <a href="/blog.html" class="post-back">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Blog
+      </a>
+      <div id="post-category" class="post-cat"></div>
+      <h1 id="post-title" class="post-title"></h1>
+      <p id="post-subheading" class="post-subheading"></p>
+      <div id="post-meta" class="post-meta"></div>
+    </div>
+  </section>
+
+  <div id="post-hero-image" class="post-hero-image" style="display:none;">
+    <img id="post-hero-img" src="" alt="">
+  </div>
+
+  <article id="post-body" class="post-body"></article>
+
+  <div class="cta-band">
+    <div class="cta-band-inner">
+      <div>
+        <h2>Ready to grow with creators?</h2>
+        <p>Launch your first campaign with Buzzbite today.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="/contact.html" class="btn-white">Get Started</a>
+        <span class="cta-note">No commitment required</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="post-not-found" class="post-not-found" style="display:none;">
+  <h2>Post not found</h2>
+  <p>Sorry, we couldn't find the article you're looking for.</p>
+  <a href="/blog.html">Back to Blog</a>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script>
+(async function() {
+  var slug = window.location.hash.slice(1) || new URLSearchParams(window.location.search).get('slug');
+  var loadingEl = document.getElementById('post-loading');
+  var contentEl = document.getElementById('post-content');
+  var notFoundEl = document.getElementById('post-not-found');
+
+  if (!slug) {
+    loadingEl.style.display = 'none';
+    notFoundEl.style.display = 'block';
+    return;
+  }
+
+  try {
+    var res = await fetch('/blog/posts.json');
+    var posts = await res.json();
+    var post = posts.find(function(p) { return p.slug === slug; });
+
+    if (!post) {
+      loadingEl.style.display = 'none';
+      notFoundEl.style.display = 'block';
+      return;
+    }
+
+    document.title = post.title + ' — Buzzbite Blog';
+
+    document.getElementById('post-category').textContent = post.category || 'Blog';
+    document.getElementById('post-title').textContent = post.title;
+
+    var subheadingEl = document.getElementById('post-subheading');
+    if (post.subheading) {
+      subheadingEl.textContent = post.subheading;
+    } else {
+      subheadingEl.style.display = 'none';
+    }
+
+    var metaParts = [];
+    if (post.postedOn || post.publishedOn) {
+      var d = new Date(post.postedOn || post.publishedOn);
+      metaParts.push('<span>' + d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + '</span>');
+    }
+    if (post.readingTime) {
+      metaParts.push('<span>' + post.readingTime + ' read</span>');
+    }
+    if (post.authors) {
+      metaParts.push('<span>By ' + post.authors + '</span>');
+    }
+    document.getElementById('post-meta').innerHTML = metaParts.join('<span class="post-meta-dot"></span>');
+
+    var heroImgContainer = document.getElementById('post-hero-image');
+    var heroImg = document.getElementById('post-hero-img');
+    if (post.heroImage) {
+      heroImg.src = post.heroImage;
+      heroImg.alt = post.title;
+      heroImgContainer.style.display = 'block';
+    }
+
+    var sanitized = post.richText
+      .replace(/<script[\s\S]*?<\/script>/gi, '')
+      .replace(/\son\w+\s*=\s*["'][^"']*["']/gi, '')
+      .replace(/\son\w+\s*=\s*[^\s>]*/gi, '')
+      .replace(/javascript\s*:/gi, '');
+    document.getElementById('post-body').innerHTML = sanitized;
+
+    loadingEl.style.display = 'none';
+    contentEl.style.display = 'block';
+  } catch (err) {
+    console.error('Error loading blog post:', err);
+    loadingEl.textContent = 'Unable to load this article. Please try refreshing the page.';
+  }
+})();
+</script>
+<script src="/components.js" defer></script>
+</body>
+</html>
