@@ -139,6 +139,14 @@
     .blog-link{font-size:13px;font-weight:700;color:var(--purple-light);text-decoration:none;}
     .blog-link:hover{color:var(--white);}
     .blog-loading{text-align:center;padding:60px 0;color:rgba(255,255,255,0.4);font-size:15px;}
+    .blog-pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:48px;flex-wrap:wrap;}
+    .blog-page-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);width:40px;height:40px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Montserrat',sans-serif;display:flex;align-items:center;justify-content:center;}
+    .blog-page-btn:hover{border-color:rgba(91,38,207,0.4);color:var(--white);}
+    .blog-page-btn.active{background:var(--purple);border-color:var(--purple);color:var(--white);}
+    .blog-page-btn:disabled{opacity:0.3;cursor:default;pointer-events:none;}
+    .blog-page-btn.nav-btn{width:auto;padding:0 16px;gap:6px;}
+    .blog-page-dots{color:rgba(255,255,255,0.3);font-size:14px;padding:0 4px;}
+    .blog-post-count{text-align:center;margin-top:16px;font-size:13px;color:rgba(255,255,255,0.3);}
   </style>
   <link rel="stylesheet" href="/responsive.css?v=3">
 </head>
@@ -159,6 +167,8 @@
     <div id="blog-featured" class="reveal"></div>
     <div id="blog-filters" class="blog-filters"></div>
     <div id="blog-grid" class="blog-grid reveal"></div>
+    <div id="blog-pagination" class="blog-pagination"></div>
+    <div id="blog-post-count" class="blog-post-count"></div>
     <div id="blog-loading" class="blog-loading">Loading articles...</div>
   </div>
 </section>
@@ -218,38 +228,97 @@
   filtersEl.innerHTML = '<button class="blog-filter-btn active" data-cat="all">All</button>' +
     categories.map(c => '<button class="blog-filter-btn" data-cat="' + c + '">' + c + '</button>').join('');
 
-  const gridEl = document.getElementById('blog-grid');
-  const otherPosts = posts.filter(p => p !== featuredPost);
+  var gridEl = document.getElementById('blog-grid');
+  var paginationEl = document.getElementById('blog-pagination');
+  var postCountEl = document.getElementById('blog-post-count');
+  var otherPosts = posts.filter(function(p) { return p !== featuredPost; });
+  var POSTS_PER_PAGE = 9;
+  var currentPage = 1;
+  var currentFilter = 'all';
 
-  function renderGrid(filterCat) {
-    const filtered = filterCat === 'all' ? otherPosts : otherPosts.filter(p => p.category === filterCat);
-    gridEl.innerHTML = filtered.map(function(p) {
-      const thumbHTML = p.thumbnailImage
-        ? '<img class="blog-card-thumb" src="' + p.thumbnailImage + '" alt="' + p.title.replace(/"/g, '&quot;') + '">'
-        : '';
-      return '<a href="/blog-post.html#' + p.slug + '" class="blog-card">' +
-        thumbHTML +
-        '<div class="blog-card-body">' +
-          '<div class="blog-cat">' + (p.category || 'Blog') + '</div>' +
-          '<h3>' + p.title + '</h3>' +
-          '<div class="blog-meta"><span>' + formatDate(p) + '</span><span>' + (p.readingTime || '') + ' read</span></div>' +
-        '</div>' +
-      '</a>';
-    }).join('');
+  function getFiltered(filterCat) {
+    return filterCat === 'all' ? otherPosts : otherPosts.filter(function(p) { return p.category === filterCat; });
   }
 
-  renderGrid('all');
+  function renderCard(p) {
+    var thumbHTML = p.thumbnailImage
+      ? '<img class="blog-card-thumb" src="' + p.thumbnailImage + '" alt="' + p.title.replace(/"/g, '&quot;') + '">'
+      : '';
+    return '<a href="/blog-post.html#' + p.slug + '" class="blog-card">' +
+      thumbHTML +
+      '<div class="blog-card-body">' +
+        '<div class="blog-cat">' + (p.category || 'Blog') + '</div>' +
+        '<h3>' + p.title + '</h3>' +
+        '<div class="blog-meta"><span>' + formatDate(p) + '</span><span>' + (p.readingTime || '') + ' read</span></div>' +
+      '</div>' +
+    '</a>';
+  }
+
+  function renderPagination(totalPosts, page) {
+    var totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+    if (totalPages <= 1) {
+      paginationEl.innerHTML = '';
+      postCountEl.innerHTML = '';
+      return;
+    }
+
+    var html = '';
+    html += '<button class="blog-page-btn nav-btn" data-page="' + (page - 1) + '"' + (page === 1 ? ' disabled' : '') + '>&larr; Prev</button>';
+
+    for (var i = 1; i <= totalPages; i++) {
+      if (totalPages > 7 && i > 2 && i < totalPages - 1 && Math.abs(i - page) > 1) {
+        if (i === 3 || i === totalPages - 2) {
+          html += '<span class="blog-page-dots">&hellip;</span>';
+        }
+        continue;
+      }
+      html += '<button class="blog-page-btn' + (i === page ? ' active' : '') + '" data-page="' + i + '">' + i + '</button>';
+    }
+
+    html += '<button class="blog-page-btn nav-btn" data-page="' + (page + 1) + '"' + (page === totalPages ? ' disabled' : '') + '>Next &rarr;</button>';
+
+    paginationEl.innerHTML = html;
+
+    var start = (page - 1) * POSTS_PER_PAGE + 1;
+    var end = Math.min(page * POSTS_PER_PAGE, totalPosts);
+    postCountEl.textContent = 'Showing ' + start + '–' + end + ' of ' + totalPosts + ' articles';
+  }
+
+  function renderGrid(filterCat, page) {
+    var filtered = getFiltered(filterCat);
+    var totalPages = Math.ceil(filtered.length / POSTS_PER_PAGE);
+    if (page > totalPages) page = totalPages || 1;
+    var start = (page - 1) * POSTS_PER_PAGE;
+    var pageItems = filtered.slice(start, start + POSTS_PER_PAGE);
+
+    gridEl.innerHTML = pageItems.map(renderCard).join('');
+    renderPagination(filtered.length, page);
+    currentPage = page;
+    currentFilter = filterCat;
+  }
+
+  renderGrid('all', 1);
 
   filtersEl.addEventListener('click', function(e) {
-    const btn = e.target.closest('.blog-filter-btn');
+    var btn = e.target.closest('.blog-filter-btn');
     if (!btn) return;
-    filtersEl.querySelectorAll('.blog-filter-btn').forEach(b => b.classList.remove('active'));
+    filtersEl.querySelectorAll('.blog-filter-btn').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
-    renderGrid(btn.dataset.cat);
+    renderGrid(btn.dataset.cat, 1);
+    gridEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  const obs = new IntersectionObserver(e => e.forEach(i => { if (i.isIntersecting) i.target.classList.add('visible'); }), { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  paginationEl.addEventListener('click', function(e) {
+    var btn = e.target.closest('.blog-page-btn');
+    if (!btn || btn.disabled) return;
+    var page = parseInt(btn.dataset.page);
+    if (isNaN(page) || page < 1) return;
+    renderGrid(currentFilter, page);
+    gridEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  var obs = new IntersectionObserver(function(e) { e.forEach(function(i) { if (i.isIntersecting) i.target.classList.add('visible'); }); }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 })();
 </script>
 <script src="/components.js" defer></script>
